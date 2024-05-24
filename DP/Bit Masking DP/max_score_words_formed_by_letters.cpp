@@ -54,7 +54,6 @@ int solve(int ind, int bitMask, unordered_map<char, int> &mpp, vector<string> &w
             {
                 int sc = calculateScore(word, mpp, score);
                 maxScore = max(maxScore, sc + solve(ind + 1, newMask, mpp, words, score, dp));
-
                 recoverCount(word, mpp);
             }
         }
