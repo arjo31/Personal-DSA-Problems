@@ -63,6 +63,34 @@ bool wordBreak(string s, vector<string> &wordDict)
     return solve(0, "", s, st, dp);
 }
 
+// Another method
+bool solve(int ind, string &s, set<string> &st, unordered_map<int, bool> &dp)
+{
+    if (ind == s.size())
+        return true;
+
+    if (dp.find(ind) != dp.end())
+        return dp[ind];
+
+    for (int len = 1; len <= s.size() - ind; ++len)
+    {
+        string temp = s.substr(ind, len);
+        if (st.find(temp) != st.end() && solve(ind + len, s, st, dp))
+        {
+            return dp[ind] = true;
+        }
+    }
+
+    return dp[ind] = false;
+}
+
+bool wordBreak(string s, vector<string> &wordDict)
+{
+    unordered_map<int, bool> dp;
+    set<string> st(wordDict.begin(), wordDict.end());
+    return solve(0, s, st, dp);
+}
+
 // Tabular method
 bool wordBreak(string s, vector<string> &wordDict)
 {
