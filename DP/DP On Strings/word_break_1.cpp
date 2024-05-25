@@ -77,7 +77,7 @@ bool wordBreak(string s, vector<string> &wordDict)
             if (i + W <= n && s.substr(i, W) == word)
                 dp[i] = dp[i + W];
             if (dp[i])
-                continue;
+                break;
         }
     }
     return dp[0];
