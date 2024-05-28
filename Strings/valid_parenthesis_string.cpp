@@ -12,51 +12,30 @@ using namespace std;
 
 bool checkValidString(string s)
 {
-    int s1 = 0;
-    int a = 0;
-    for (auto &x : s)
+    int n = s.size();
+    int min = 0;
+    int max = 0;
+    for (int i = 0; i < n; i++)
     {
-        if (x == '(')
-            s1 += 1;
-        if (x == ')')
-            s1 -= 1;
-        else if (x == '*')
-            a++;
-        if (s1 < 0)
+        if (s[i] == '(')
         {
-            if (a == 0)
-                return 0;
-            a--;
-            s1++;
+            min = min + 1;
+            max = max + 1;
         }
-    }
-    if (s1 == 0)
-        return 1;
-    if (a >= s1)
-    {
-
-        s1 = 0;
-        a = 0;
-        for (int i = s.size() - 1; i >= 0; i--)
+        else if (s[i] == ')')
         {
-            char x = s[i];
-            if (x == '(')
-                s1 += 1;
-            if (x == ')')
-                s1 -= 1;
-            else if (x == '*')
-                a++;
-            if (s1 > 0)
-            {
-                if (a <= 0)
-                    return 0;
-                a--;
-                s1--;
-            }
+            min = min - 1;
+            max = max - 1;
         }
-        return a >= (-1 * s1);
+        else
+        {
+            min = min - 1;
+            max = max + 1;
+        }
+        if (min < 0)
+            min = 0;
+        if (max < 0)
+            return false;
     }
-
-    // if(s1 >= 0 && a >= s1) return 1;
-    return a >= (s1);
+    return (min == 0);
 }
