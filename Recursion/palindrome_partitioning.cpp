@@ -26,7 +26,7 @@ void backtrack(string s, int ind, vector<string> &v, vector<vector<string>> &ans
     }
     for (int i = ind + 1; i <= s.size(); i++)
     {
-        if (isPalindrome(s, ind, i))
+        if (isPalindrome(s, ind, i - 1))
         {
             v.push_back(s.substr(ind, i - ind));
             backtrack(s, i, v, ans);
