@@ -114,3 +114,28 @@ int knapsackSO2(int n, vector<int>&weight, vector<int>&value, int capacity)
     }
     return prev[capacity];
 }
+
+//Bottom Up Approach
+int knapSack(int W, int wt[], int val[], int n)
+{
+    vector<vector<int>> dp(n + 1, vector<int>(W + 1, 0));
+    for (int i = 0; i < n + 1; i++)
+    {
+        if (i == n - 1)
+            if (wt[i] <= W)
+                dp[i][W] = val[i];
+    }
+
+    for (int i = n - 1; i >= 0; i--)
+    {
+        for (int w = 0; w <= W; w++)
+        {
+            int notPick = 0 + dp[i + 1][w];
+            int pick = INT_MIN;
+            if (wt[i] <= w)
+                pick = val[i] + dp[i + 1][w - wt[i]];
+            dp[i][w] = max(pick, notPick);
+        }
+    }
+    return dp[0][W];
+}
