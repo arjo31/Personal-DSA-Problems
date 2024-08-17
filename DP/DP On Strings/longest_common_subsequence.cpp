@@ -135,3 +135,54 @@ string printlcsTabulation(string s1, string s2)
     }
     return ans;
 }
+
+// Bottom Up tabulation with string printing
+int lcs(int n, int m, string str1, string str2)
+{
+    vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
+    for (int i = 0; i <= n; i++)
+        dp[i][m] = 0;
+    for (int j = 0; j <= m; j++)
+        dp[n][j] = 0;
+
+    for (int i = n - 1; i >= 0; i--)
+    {
+        for (int j = m - 1; j >= 0; j--)
+        {
+            if (str1[i] == str2[j])
+                dp[i][j] = 1 + dp[i + 1][j + 1];
+            else
+                dp[i][j] = max(dp[i + 1][j], dp[i][j + 1]);
+        }
+    }
+    cout << "Printing matrix" << endl;
+    for (int i = 0; i <= n; i++)
+    {
+        for (int j = 0; j <= m; j++)
+        {
+            cout << dp[i][j] << " ";
+        }
+        cout << endl;
+    }
+    string ans = "";
+    int i = 0;
+    int j = 0;
+    while (i != n && j != m)
+    {
+        if (str1[i] == str2[j])
+        {
+            ans += str1[i];
+            i++;
+            j++;
+        }
+        else
+        {
+            if (dp[i + 1][j] > dp[i][j + 1])
+                i++;
+            else
+                j++;
+        }
+    }
+    cout << ans << endl;
+    return dp[0][0];
+}

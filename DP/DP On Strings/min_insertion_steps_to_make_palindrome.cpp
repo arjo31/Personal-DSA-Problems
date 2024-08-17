@@ -4,6 +4,8 @@ Return the minimum number of steps to make s palindrome.
 
 A Palindrome String is one that reads the same backward as well as forward.*/
 
+/*Same for minimum deletions to make string palindrome*/
+
 #include <bits/stdc++.h>
 using namespace std;
 

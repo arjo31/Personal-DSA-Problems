@@ -5,9 +5,7 @@ using namespace std;
 
 vector<int> MinimumCoins(int n)
 {
-    vector<int> currency = {1,2,5,10,20,50,100,500,1000};
-    sort(currency.begin(), currency.end());
- 
+    vector<int> currency = {1,2,5,10,20,50,100,500,1000}; 
     // Initialize result
     vector<int> ans;
  
