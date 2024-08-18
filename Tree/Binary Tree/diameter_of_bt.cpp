@@ -6,19 +6,23 @@ The length of a path between two nodes is represented by the number of edges bet
 
 #include "binary_tree.h"
 
-int height(TreeNode *root, int &dia)
+int solve(TreeNode *root, int &res)
 {
     if (root == nullptr)
         return 0;
-    int lh = height(root->left, dia);
-    int rh = height(root->right, dia);
-    dia = max(dia, lh + rh);
-    return max(lh, rh) + 1;
+
+    int left = solve(root->left, res);
+    int right = solve(root->right, res);
+
+    int temp = 1 + max(left, right);
+    int ans = max(temp, 1 + left + right);
+    res = max(res, ans);
+    return temp;
 }
 
 int diameterOfBinaryTree(TreeNode *root)
 {
-    int dia = 0;
-    height(root, dia);
-    return dia;
+    int res = INT_MIN;
+    solve(root, res);
+    return res;
 }
