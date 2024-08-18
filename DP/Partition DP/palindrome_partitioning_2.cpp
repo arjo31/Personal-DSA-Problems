@@ -15,6 +15,32 @@ bool isPalindrome(int i, int j, string &s)
     return true;
 }
 
+// Memoization without optimization
+int solve(int i, int j, string &s, vector<vector<int>> &dp)
+{
+    if (i >= j)
+        return 0;
+    if (dp[i][j] != -1)
+        return dp[i][j];
+    if (isPalindrome(i, j, s))
+        return dp[i][j] = 0;
+
+    int minCuts = INT_MAX;
+    for (int k = i; k < j; k++)
+    {
+        int cost = 1 + solve(i, k, s, dp) + solve(k + 1, j, s, dp);
+        minCuts = min(minCuts, cost);
+    }
+    return dp[i][j] = minCuts;
+}
+
+int palindromicPartition(string s)
+{
+    int n = s.size();
+    vector<vector<int>> dp(501, vector<int>(501, -1));
+    return solve(0, n - 1, s, dp);
+}
+
 // Memoization
 int solveMemoization(int i, int n, string &s, vector<int> &dp)
 {
