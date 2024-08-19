@@ -1,59 +1,52 @@
+/*An image is represented by an m x n integer grid image where image[i][j] represents the pixel value of the image.
+
+You are also given three integers sr, sc, and color. You should perform a flood fill on the image starting from the pixel image[sr][sc].
+
+To perform a flood fill, consider the starting pixel, plus any pixels connected 4-directionally to the starting pixel of the same color as the starting pixel, plus any pixels connected 4-directionally to those pixels (also with the same color), and so on. Replace the color of all of the aforementioned pixels with color.
+
+Return the modified image after performing the flood fill.*/
+
 #include <bits/stdc++.h>
 using namespace std;
 
-void bfs(vector<vector<int>>&grid, vector<vector<int>>&vis, int sr,int sc, int color, int &initColor)
+vector<int> drow = {-1, 0, 1, 0};
+vector<int> dcol = {0, 1, 0, -1};
+int n, m;
+bool isValid(int row, int col)
 {
-    queue<pair<int,int>>q;
-    vis[sr][sc] = 1;
-    grid[sr][sc] = color;
-    q.push({sr,sc});
+    return (row >= 0 && row < n && col >= 0 && col < m);
+}
+
+void bfs(int row, int col, vector<vector<int>> &image, int initColor, int color)
+{
+    image[row][col] = color;
+    queue<pair<int, int>> q;
+    q.push({row, col});
     while (!q.empty())
     {
         int r = q.front().first;
         int c = q.front().second;
         q.pop();
-        vector<int> drow = {-1,0,1,0};
-        vector<int> dcol = {0,1,0,-1};
-        for (int i = 0 ; i < 4; i++)
+
+        for (int i = 0; i < 4; i++)
         {
             int nrow = r + drow[i];
             int ncol = c + dcol[i];
-            if ((nrow < grid.size() && nrow>=0) && (ncol < grid[0].size() && ncol>=0) && grid[nrow][ncol]==initColor && !vis[nrow][ncol])
+            if (isValid(nrow, ncol) && image[nrow][ncol] == initColor)
             {
-                vis[nrow][ncol] = 1;
-                grid[nrow][ncol] = color;
-                q.push({nrow,ncol});
+                image[nrow][ncol] = color;
+                q.push({nrow, ncol});
             }
         }
     }
 }
-
-vector<vector<int>>floodFill(vector<vector<int>>&grid, int sr, int sc, int color)
+vector<vector<int>> floodFill(vector<vector<int>> &image, int sr, int sc, int color)
 {
-    int n = grid.size();
-    int m = grid[0].size();
-    vector<vector<int>>vis(n,vector<int>(m,0));
-    int initColor = grid[sr][sc];
-    bfs(grid,vis,sr,sc,color,initColor);
-    return grid;
-}
-
-int main()
-{
-    vector<vector<int>> grid = {
-        {7,1,1,1},
-        {1,7,7,7},
-        {7,7,7,0},
-        {7,7,7,4},
-        {4,4,4,4}
-    };
-    floodFill(grid,2,2,5);
-    for (int i = 0; i<grid.size(); i++)
-    {
-        for (int j = 0; j < grid[0].size(); j++)
-        {
-            cout<<grid[i][j]<<" ";
-        }
-        cout<<endl;
-    }
+    n = image.size();
+    m = image[0].size();
+    int initColor = image[sr][sc];
+    if (initColor == color)
+        return image;
+    bfs(sr, sc, image, initColor, color);
+    return image;
 }

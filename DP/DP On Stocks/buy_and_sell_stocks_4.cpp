@@ -22,15 +22,11 @@ int solveMemoization(vector<int> &prices, int ind, int buy, int cap, vector<vect
 
     if (buy)
     {
-        profit = max(-prices[ind] +
-                         solveMemoization(prices, ind + 1, 0, cap, dp),
-                     0 + solveMemoization(prices, ind + 1, 1, cap, dp));
+        profit = max(-prices[ind] + solveMemoization(prices, ind + 1, 0, cap, dp), 0 + solveMemoization(prices, ind + 1, 1, cap, dp));
     }
     else
     {
-        profit = max(prices[ind] +
-                         solveMemoization(prices, ind + 1, 1, cap - 1, dp),
-                     0 + solveMemoization(prices, ind + 1, 0, cap, dp));
+        profit = max(prices[ind] + solveMemoization(prices, ind + 1, 1, cap - 1, dp), 0 + solveMemoization(prices, ind + 1, 0, cap, dp));
     }
     return dp[ind][buy][cap] = profit;
 }
