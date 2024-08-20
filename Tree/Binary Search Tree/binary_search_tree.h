@@ -90,44 +90,6 @@ public:
 //     return ans;
 // }
 
-// //Check if tree is BST or BT
-// bool isValidBST(TreeNode* root, long minVal, long maxVal)
-// {
-//     if (root==nullptr) return true;
-//     if (root->val >= maxVal || root->val <= minVal) return false;
-//     return (isValidBST(root->left, minVal,root->val) && isValidBST(root->right,root->val,maxVal));
-
-// }
-// bool isBST(TreeNode* root)
-// {
-//     return isValidBST(root,LONG_MIN, LONG_MAX);
-// }
-
-// //LCA of two nodes
-// TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) //Iterative
-// {
-//     if (root==nullptr) return root;
-//     TreeNode* curr = root;
-
-//     while (curr)
-//     {
-//         int currVal = curr->val;
-//         if (p->val < currVal && q->val < currVal) //Go left subtree
-//         {
-//             curr = curr->left;
-//         }
-//         else if (p->val > currVal && q->val > currVal) //Go right subtree
-//         {
-//             curr = curr->right;
-//         }
-//         else
-//         {
-//             break;
-//         }
-//     }
-//     return curr;
-// }
-
 
 // //Construct BST from preorder traversal
 // TreeNode* build(vector<int>&preOrder, int &i, int bound)
