@@ -2,16 +2,21 @@
 
 #include "binary_tree.h"
 
-TreeNode *invertTree(TreeNode *root)
+void solve(TreeNode *root)
 {
-    if (root == NULL)
-        return root;
+    if (root == nullptr)
+        return;
+    if (root->left != nullptr)
+        solve(root->left);
+    if (root->right != nullptr)
+        solve(root->right);
 
-    invertTree(root->left);
-    invertTree(root->right);
     TreeNode *temp = root->left;
     root->left = root->right;
     root->right = temp;
-
+}
+TreeNode *invertTree(TreeNode *root)
+{
+    solve(root);
     return root;
 }

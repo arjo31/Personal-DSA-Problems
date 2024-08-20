@@ -5,7 +5,7 @@ A subtree of a binary tree tree is a tree that consists of a node in tree and al
 #include "binary_tree.h"
 
 // Recursive
-bool solve(TreeNode *root, TreeNode *subRoot)
+bool isSameTree(TreeNode *root, TreeNode *subRoot)
 {
     if (root == nullptr && subRoot == nullptr)
         return true;
@@ -13,7 +13,7 @@ bool solve(TreeNode *root, TreeNode *subRoot)
         return false;
     if (root->val != subRoot->val)
         return false;
-    return solve(root->left, subRoot->left) && solve(root->right, subRoot->right);
+    return isSameTree(root->left, subRoot->left) && isSameTree(root->right, subRoot->right);
 }
 bool isSubtree(TreeNode *root, TreeNode *subRoot)
 {
@@ -21,13 +21,13 @@ bool isSubtree(TreeNode *root, TreeNode *subRoot)
         return false;
     if (subRoot == nullptr)
         return true;
-    if (solve(root, subRoot))
+    if (isSameTree(root, subRoot))
         return true;
     return isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
 }
 
 // Iterative
-bool solve(TreeNode *root, TreeNode *subRoot)
+bool isSameTree(TreeNode *root, TreeNode *subRoot)
 {
     if (root == nullptr && subRoot == nullptr)
         return true;
@@ -35,7 +35,7 @@ bool solve(TreeNode *root, TreeNode *subRoot)
         return false;
     if (root->val != subRoot->val)
         return false;
-    return solve(root->left, subRoot->left) && solve(root->right, subRoot->right);
+    return isSameTree(root->left, subRoot->left) && isSameTree(root->right, subRoot->right);
 }
 
 bool isSubtree(TreeNode *root, TreeNode *subRoot)
@@ -61,7 +61,7 @@ bool isSubtree(TreeNode *root, TreeNode *subRoot)
 
         if (curr->val == subRoot->val)
         {
-            if (solve(curr, subRoot))
+            if (isSameTree(curr, subRoot))
             {
                 return true;
             }
