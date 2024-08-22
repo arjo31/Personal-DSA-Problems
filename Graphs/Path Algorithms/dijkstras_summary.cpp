@@ -1,4 +1,4 @@
-//This code finds the minimum cost required to travel from 1 to n, then it finds the number of minimum cost routes from 1 to n, the it finds the length of the shortest path and longest path of minimum cost from 1 to n.
+//This code finds the minimum cost required to travel from 1 to n, then it finds the number of minimum cost routes from 1 to n, then it finds the length of the shortest path and longest path of minimum cost from 1 to n.
 
 #include <bits/stdc++.h>
 using namespace std;
