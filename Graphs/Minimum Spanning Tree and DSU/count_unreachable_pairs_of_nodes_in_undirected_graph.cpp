@@ -68,13 +68,12 @@ long long countPairs(int n, vector<vector<int>> &edges)
             s.insert(ds.findUParent(i));
         }
     }
-    long long totSum = accumulate(sizes.begin(), sizes.end(), 0LL);
     long long ans = 0;
     long long currSum = 0;
     for (int i = 0; i < sizes.size(); i++)
     {
         currSum += sizes[i];
-        ans += (sizes[i] * (totSum - currSum));
+        ans += (sizes[i] * (n - currSum));
     }
     return ans;
 }
