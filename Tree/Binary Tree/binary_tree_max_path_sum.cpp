@@ -6,19 +6,22 @@ Given the root of a binary tree, return the maximum path sum of any non-empty pa
 
 #include "binary_tree.h"
 
-int maxPathDown(TreeNode *root, int &maxi)
+int solve(TreeNode *root, int &res)
 {
     if (root == nullptr)
         return 0;
-    int leftPath = fmax(0, maxPathDown(root->left, maxi));
-    int rightPath = fmax(0, maxPathDown(root->right, maxi));
-    maxi = fmax(maxi, root->val + leftPath + rightPath);
-    return (root->val + max(leftPath, rightPath));
-}
 
+    int left = max(0, solve(root->left, res));
+    int right = max(0, solve(root->right, res));
+
+    int temp = max(left, right) + root->val;
+    int ans = max(temp, root->val + left + right);
+    res = max(ans, res);
+    return temp;
+}
 int maxPathSum(TreeNode *root)
 {
-    int maxi = INT_MIN;
-    maxPathDown(root, maxi);
-    return maxi;
+    int res = INT_MIN;
+    solve(root, res);
+    return res;
 }
