@@ -9,3 +9,39 @@ A cycle is a path that starts and ends at the same node.*/
 #include <bits/stdc++.h>
 using namespace std;
 
+int result = -1;
+
+void dfs(int u, vector<int> &edges, vector<bool> &vis, vector<int> &count, vector<bool> &inRecursion)
+{
+    if (u != -1)
+    {
+        vis[u] = 1;
+        inRecursion[u] = 1;
+        int v = edges[u];
+        if (v != -1 && !vis[v])
+        {
+            count[v] = count[u] + 1;
+            dfs(v, edges, vis, count, inRecursion);
+        }
+        else if (v != -1 && vis[v] && inRecursion[v])
+        {
+            result = max(result, count[u] - count[v] + 1);
+        }
+
+        inRecursion[u] = 0;
+    }
+}
+
+int longestCycle(vector<int> &edges)
+{
+    int n = edges.size();
+    vector<bool> vis(n, false);
+    vector<bool> inRecursion(n, false);
+    vector<int> count(n, 1);
+    for (int i = 0; i < n; i++)
+    {
+        if (!vis[i])
+            dfs(i, edges, vis, count, inRecursion);
+    }
+    return result;
+}
