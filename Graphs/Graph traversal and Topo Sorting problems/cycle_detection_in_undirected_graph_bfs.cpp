@@ -19,10 +19,7 @@ bool detect(int src, vector<int> adj[], int vis[])
                 vis[adjacentNode] = 1;
                 q.push({adjacentNode, node});
             }
-            else if (parent!=adjacentNode)
-            {
-                return true;
-            }
+            else if (parent!=adjacentNode) return true;
         }
     }
     return false;
