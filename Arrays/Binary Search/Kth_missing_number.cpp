@@ -22,5 +22,5 @@ int missingK(vector<int>&arr, int k)
             high = mid - 1;
         }
     }
-    return k + high + 1;
+    return arr[high] + (k - (arr[high] - (high + 1)));
 }
