@@ -1,4 +1,4 @@
-// You are given a strictly increasing array ‘vec’ and a positive integer ‘k’. Find the ‘kth’ positive integer missing from ‘vec’.
+// You are given a strictly increasing array 'vec' and a positive integer 'k'. Find the 'kth' positive integer missing from 'vec'.
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -22,5 +22,6 @@ int missingK(vector<int> &arr, int k)
             high = mid - 1;
         }
     }
-    return k + high + 1;
+    int more = k - (arr[high] - (high + 1));
+    return arr[high] + more;
 }
