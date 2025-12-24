@@ -4,45 +4,42 @@ Find out the least-weight capacity so that you can ship all the packages within 
 
 #include <bits/stdc++.h>
 using namespace std;
+int n;
 
-const int MOD = 1e9 + 7;
-
-int days(vector<int>&arr, int maxCap)
+int daysTaken(vector<int> &weights, int capacity)
 {
-    int n = arr.size();
-    int noOfDays = 1;
-    int load = 0;
+    int daysTaken = 0;
+    int cap = 0;
     for (int i = 0; i < n; i++)
     {
-        if (load + arr[i] > maxCap)
+        cap += weights[i];
+        if (cap > capacity)
         {
-            noOfDays++;
-            load = arr[i];
-        }
-        else
-        {
-            load+=arr[i];
+            daysTaken += 1;
+            cap = weights[i];
         }
     }
-    return noOfDays;
+    daysTaken += 1;
+    return daysTaken;
 }
 
-int weightCapacity(vector<int>&arr, int d)
+int shipWithinDays(vector<int> &weights, int days)
 {
-    int low = *max_element(arr.begin(),arr.end());
-    int high = accumulate(arr.begin(), arr.end(), 0);
-    while (low<=high)
+    n = weights.size();
+    int minCap = *max_element(weights.begin(), weights.end());
+    int maxCap = accumulate(weights.begin(), weights.end(), 0);
+    int minDays = maxCap;
+    while (minCap <= maxCap)
     {
-        int mid = low + (high - low)/2;
-        if (days(arr,mid)<=d)
+        int midCap = minCap + (maxCap - minCap) / 2;
+
+        if (daysTaken(weights, midCap) <= days)
         {
-            cout<<mid<<" "<<days(arr,mid)<<endl;
-            high = mid - 1;
+            minDays = midCap;
+            maxCap = midCap - 1;
         }
         else
-        {
-            low = mid + 1;
-        }
+            minCap = midCap + 1;
     }
-    return low;
+    return minDays;
 }

@@ -9,35 +9,42 @@ Given the integer array position and the integer m. Return the required force.*/
 #include <bits/stdc++.h>
 using namespace std;
 
-int maxDistance(vector<int> &position, int m)
-{
-    sort(position.begin(), position.end());
-    int n = position.size();
-    int low = 1;
-    int high = position[n - 1] - position[0];
-    while (low <= high)
-    {
-        int mid = low + (high - low) / 2;
-        if (isPossible(position, mid, m))
-            low = mid + 1;
-        else
-            high = mid - 1;
-    }
-    return high;
-}
+int n;
 
-bool isPossible(vector<int> &position, int mid, int m)
+int noOfBalls(vector<int> &positions, int force)
 {
+    int initPos = positions[0];
     int balls = 1;
-    int initDist = position[0];
-    int n = position.size();
     for (int i = 1; i < n; i++)
     {
-        if (position[i] - initDist >= mid)
+        if (positions[i] - initPos >= force)
         {
-            balls++;
-            initDist = position[i];
+            balls += 1;
+            initPos = positions[i];
         }
     }
-    return (balls >= m);
+    return balls;
+}
+
+int maxDistance(vector<int> &positions, int m)
+{
+    n = positions.size();
+    sort(begin(positions), end(positions));
+    int minForce = 1;
+    int maxForce = positions[n - 1] - positions[0];
+    int minMaxForce = maxForce;
+    while (minForce <= maxForce)
+    {
+        int midForce = minForce + (maxForce - minForce) / 2;
+        if (noOfBalls(positions, midForce) < m)
+        {
+            maxForce = midForce - 1;
+        }
+        else
+        {
+            minMaxForce = midForce;
+            minForce = midForce + 1;
+        }
+    }
+    return minMaxForce;
 }
